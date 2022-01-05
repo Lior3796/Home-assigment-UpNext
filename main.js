@@ -16,8 +16,13 @@ const setCookies = () => {
 
 window.onload = () => {
     const checkToggleBtn = getResultFromCookies(toggleChoice);
-    if (!checkToggleBtn) return;
-    amount.innerText = checkToggleBtn;
+    if (!checkToggleBtn) {
+        amount.innerText = 0;
+
+    } else {
+        amount.innerText = checkToggleBtn;
+
+    }
 }
 
 unit.addEventListener("click", () => {
@@ -41,11 +46,13 @@ const getResultFromCookies = (toggleChoice) => {
     const cookieValue = document.cookie
         .split('; ')
         ?.find(row => row.startsWith(`${toggleChoice}=`))
-        ?.split('=')[1] || undefined;
+        ?.split('=')[1] || 0;
+    console.log(cookieValue);
     return cookieValue;
 }
 
 increment.addEventListener("click", () => {
+    console.log(toggleChoice);
     const userResult = getResultFromCookies(toggleChoice);
     const amountResult = countUpOrDown("increment", userResult);
     document.cookie = `${toggleChoice}=${amountResult}`;
@@ -53,6 +60,7 @@ increment.addEventListener("click", () => {
 })
 
 decrement.addEventListener("click", () => {
+    console.log(toggleChoice);
     const userResult = getResultFromCookies(toggleChoice);
     const amountResult = countUpOrDown("decrement", userResult);
     document.cookie = `${toggleChoice}=${amountResult}`;
